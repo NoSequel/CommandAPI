@@ -11,7 +11,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collection;
 
 public class CommandExecutor extends Command {
 
@@ -49,25 +50,31 @@ public class CommandExecutor extends Command {
         }
 
         final ParameterData[] parameterDatum = executingData.getCommandData().getParameterData();
-        final Object[] data = new Object[parameterDatum.length];
+        final Object[] data;
 
-        for (int i = 0; i < parameterDatum.length; i++) {
-            final ParameterData parameterData = parameterDatum[i];
+        if (parameterDatum != null) {
+            data = new Object[parameterDatum.length];
 
-            if (i >= args.length) {
-                sender.sendMessage(executingData.getCommandData().getUsageMessage(label));
-                return true;
-            }
+            for (int i = 0; i < parameterDatum.length; i++) {
+                final ParameterData parameterData = parameterDatum[i];
 
-            try {
-                if (parameterData.isLastIndex() && parameterData.isString()) {
-                    data[i] = StringUtils.join(Arrays.copyOfRange(args, i, args.length));
-                } else {
-                    data[i] = parameterData.getAdapter().convert(sender, args[i]);
+                if (i >= args.length) {
+                    sender.sendMessage(executingData.getCommandData().getUsageMessage(label));
+                    return true;
                 }
-            } catch (Exception exception) {
-                parameterData.getAdapter().handleException(sender, args[i], exception);
+
+                try {
+                    if (parameterData.isLastIndex() && parameterData.isString()) {
+                        data[i] = StringUtils.join(Arrays.copyOfRange(args, i, args.length), " ");
+                    } else {
+                        data[i] = parameterData.getAdapter().convert(sender, args[i]);
+                    }
+                } catch (Exception exception) {
+                    parameterData.getAdapter().handleException(sender, args[i], exception);
+                }
             }
+        } else {
+            data = new Object[0];
         }
 
         try {

@@ -3,14 +3,18 @@ package io.github.nosequel.command.data;
 import io.github.nosequel.command.CommandHandler;
 import io.github.nosequel.command.adapter.TypeAdapter;
 import io.github.nosequel.command.adapter.impl.FallbackTypeAdapter;
+import io.github.nosequel.command.annotation.Subcommand;
 import lombok.Getter;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
-import java.util.*;
+import java.util.Arrays;
+import java.util.stream.Collectors;
 
 @Getter
 public abstract class CommandData<T extends Annotation> {
@@ -95,8 +99,22 @@ public abstract class CommandData<T extends Annotation> {
         this.method.invoke(this.object, objects);
     }
 
+    /**
+     * Get the usage message to send whenever the
+     * executor didn't provide the correct arguments.
+     *
+     * @param label the label to display
+     * @return the usage message
+     */
     public String getUsageMessage(String label) {
-        return "";
-    }
+        final String arguments = " " + Arrays.stream(this.parameterData)
+                .map(argument -> "<" + argument.getParameter().getName() + ">")
+                .collect(Collectors.joining(" "));
 
+        if (this.getCommand() instanceof Subcommand) {
+            return ChatColor.RED + "/" + label + " " + ((Subcommand) this.getCommand()).label() + arguments;
+        }
+
+        return ChatColor.RED + "/" + label + arguments;
+    }
 }

@@ -1,14 +1,19 @@
 package io.github.nosequel.command;
 
 import io.github.nosequel.command.adapter.TypeAdapter;
+import io.github.nosequel.command.adapter.impl.DoubleTypeAdapter;
+import io.github.nosequel.command.adapter.impl.IntegerTypeAdapter;
+import io.github.nosequel.command.adapter.impl.LocationTypeAdapter;
+import io.github.nosequel.command.adapter.impl.PlayerTypeAdapter;
 import io.github.nosequel.command.annotation.Command;
 import io.github.nosequel.command.annotation.Subcommand;
-import io.github.nosequel.command.data.CommandData;
 import io.github.nosequel.command.data.impl.BaseCommandData;
 import io.github.nosequel.command.data.impl.SubcommandData;
 import lombok.Getter;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.command.CommandMap;
+import org.bukkit.entity.Player;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
@@ -35,6 +40,11 @@ public class CommandHandler {
         if ((this.commandMap = this.getCommandMap()) == null) {
             throw new IllegalArgumentException("Unable to find CommandMap inside of Bukkit#getPluginManager");
         }
+
+        this.registerTypeAdapter(Player.class, new PlayerTypeAdapter());
+        this.registerTypeAdapter(Location.class, new LocationTypeAdapter());
+        this.registerTypeAdapter(Integer.class, new IntegerTypeAdapter());
+        this.registerTypeAdapter(Double.class, new DoubleTypeAdapter());
     }
 
     /**
