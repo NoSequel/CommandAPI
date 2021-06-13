@@ -21,7 +21,7 @@ public class ExampleCommand {
         player.sendMessage(ChatColor.YELLOW + description);
     }
 
-    @Subcommand(parentLabel = "sheep", label = "example")
+    @Subcommand(parentLabel = "example", label = "sheep")
     public void sheep(Player player, String entityType) {
         final Location location = player.getLocation();
         final EntityType type = EntityType.valueOf(entityType);
