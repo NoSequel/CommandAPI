@@ -19,16 +19,40 @@ public class ParameterData {
     private final boolean isLastIndex;
 
     /**
+     * Constructor to make a new parameter data object
+     *
+     * @param adapter     the adapter to convert the values with
+     * @param parameter   the parameter object the data is for
+     * @param isLastIndex whether the data is the last index in the method
+     */
+    public ParameterData(TypeAdapter<?> adapter, Parameter parameter, boolean isLastIndex) {
+        this.adapter = adapter;
+        this.parameter = parameter;
+        this.isLastIndex = isLastIndex;
+
+        this.param = parameter.getAnnotation(Param.class);
+    }
+
+    /**
+     * Get the name of the parameter
+     *
+     * @return the name
+     */
+    public String getParameterName() {
+        return this.param == null
+                ? this.parameter.getName()
+                : this.param.name();
+    }
+
+    /**
      * Get the default value of the parameter
      *
      * @return the default value
      */
     public String getDefaultValue() {
-        if(this.param != null && !this.param.value().isEmpty()) {
-            return this.param.value();
-        }
-
-        return null;
+        return this.param != null && !this.param.value().isEmpty()
+                ? this.param.value()
+                : null;
     }
 
     public boolean isString() {

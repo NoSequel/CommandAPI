@@ -5,7 +5,6 @@ import io.github.nosequel.command.adapter.TypeAdapter;
 import io.github.nosequel.command.adapter.impl.FallbackTypeAdapter;
 import io.github.nosequel.command.annotation.Subcommand;
 import lombok.Getter;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
@@ -108,7 +107,7 @@ public abstract class CommandData<T extends Annotation> {
      */
     public String getUsageMessage(String label) {
         final String arguments = " " + Arrays.stream(this.parameterData)
-                .map(argument -> "<" + argument.getParameter().getName() + ">")
+                .map(argument -> "<" + argument.getParameterName() + ">")
                 .collect(Collectors.joining(" "));
 
         if (this.getCommand() instanceof Subcommand) {
