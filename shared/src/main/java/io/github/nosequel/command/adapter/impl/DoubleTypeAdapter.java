@@ -1,7 +1,7 @@
 package io.github.nosequel.command.adapter.impl;
 
 import io.github.nosequel.command.adapter.TypeAdapter;
-import org.bukkit.command.CommandSender;
+import io.github.nosequel.command.executor.CommandExecutor;
 
 public class DoubleTypeAdapter implements TypeAdapter<Double> {
 
@@ -13,7 +13,7 @@ public class DoubleTypeAdapter implements TypeAdapter<Double> {
      * @return the converted object
      */
     @Override
-    public Double convert(CommandSender executor, String source) throws Exception {
+    public Double convert(CommandExecutor executor, String source) throws Exception {
         return Double.parseDouble(source);
     }
 }

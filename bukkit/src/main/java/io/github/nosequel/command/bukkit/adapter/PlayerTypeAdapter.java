@@ -1,6 +1,7 @@
-package io.github.nosequel.command.adapter.impl;
+package io.github.nosequel.command.bukkit.adapter;
 
 import io.github.nosequel.command.adapter.TypeAdapter;
+import io.github.nosequel.command.executor.CommandExecutor;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -15,7 +16,7 @@ public class PlayerTypeAdapter implements TypeAdapter<Player> {
      * @return the converted object
      */
     @Override
-    public Player convert(CommandSender executor, String source) throws Exception {
+    public Player convert(CommandExecutor executor, String source) throws Exception {
         if (source.equalsIgnoreCase("@SELF")) {
             if (!(executor instanceof Player)) {
                 return null;

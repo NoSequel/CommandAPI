@@ -1,7 +1,6 @@
 package io.github.nosequel.command.adapter;
 
-import org.bukkit.ChatColor;
-import org.bukkit.command.CommandSender;
+import io.github.nosequel.command.executor.CommandExecutor;
 
 public interface TypeAdapter<T> {
 
@@ -12,7 +11,7 @@ public interface TypeAdapter<T> {
      * @param source   the source to convert
      * @return the converted object
      */
-    T convert(CommandSender executor, String source) throws Exception;
+    T convert(CommandExecutor executor, String source) throws Exception;
 
     /**
      * Handle a thrown exception while converting the object.
@@ -21,8 +20,8 @@ public interface TypeAdapter<T> {
      * @param source    the source which was attempted to convert
      * @param exception the exception to handle
      */
-    default void handleException(CommandSender executor, String source, Exception exception) {
-        executor.sendMessage(ChatColor.RED + "Could not parse from " + source + ".");
+    default void handleException(CommandExecutor executor, String source, Exception exception) {
+        executor.sendMessage("§cCould not parse from " + source + ".");
     }
 
 }

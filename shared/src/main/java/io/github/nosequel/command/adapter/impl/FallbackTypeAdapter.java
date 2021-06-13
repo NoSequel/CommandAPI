@@ -1,7 +1,7 @@
 package io.github.nosequel.command.adapter.impl;
 
 import io.github.nosequel.command.adapter.TypeAdapter;
-import org.bukkit.command.CommandSender;
+import io.github.nosequel.command.executor.CommandExecutor;
 
 public class FallbackTypeAdapter implements TypeAdapter<String> {
 
@@ -13,7 +13,7 @@ public class FallbackTypeAdapter implements TypeAdapter<String> {
      * @return the converted object
      */
     @Override
-    public String convert(CommandSender executor, String source) throws Exception {
+    public String convert(CommandExecutor executor, String source) throws Exception {
         return source;
     }
 }

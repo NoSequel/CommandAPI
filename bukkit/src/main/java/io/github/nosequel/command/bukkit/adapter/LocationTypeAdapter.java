@@ -1,11 +1,11 @@
-package io.github.nosequel.command.adapter.impl;
+package io.github.nosequel.command.bukkit.adapter;
 
 import io.github.nosequel.command.adapter.TypeAdapter;
+import io.github.nosequel.command.executor.CommandExecutor;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
-import org.bukkit.command.CommandSender;
 
 public class LocationTypeAdapter implements TypeAdapter<Location> {
 
@@ -17,7 +17,7 @@ public class LocationTypeAdapter implements TypeAdapter<Location> {
      * @return the converted object
      */
     @Override
-    public Location convert(CommandSender executor, String source) throws Exception {
+    public Location convert(CommandExecutor executor, String source) throws Exception {
         final String[] split = source.split(",");
 
         if (split.length < 4) {
@@ -46,7 +46,7 @@ public class LocationTypeAdapter implements TypeAdapter<Location> {
      * @param exception the exception to handle
      */
     @Override
-    public void handleException(CommandSender executor, String source, Exception exception) {
+    public void handleException(CommandExecutor executor, String source, Exception exception) {
         executor.sendMessage(ChatColor.RED + exception.getMessage());
     }
 }

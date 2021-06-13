@@ -1,12 +1,11 @@
 package io.github.nosequel.command.data;
 
-import io.github.nosequel.command.CommandHandler;
-import io.github.nosequel.command.adapter.TypeAdapter;
 import io.github.nosequel.command.adapter.impl.FallbackTypeAdapter;
 import io.github.nosequel.command.annotation.Subcommand;
+import io.github.nosequel.command.CommandHandler;
+import io.github.nosequel.command.adapter.TypeAdapter;
+import io.github.nosequel.command.executor.CommandExecutor;
 import lombok.Getter;
-import org.bukkit.ChatColor;
-import org.bukkit.command.CommandSender;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationTargetException;
@@ -86,7 +85,7 @@ public abstract class CommandData<T extends Annotation> {
      * @throws InvocationTargetException thrown by {@link Method#invoke(Object, Object...)}
      * @throws IllegalAccessException    thrown by {@link Method#invoke(Object, Object...)}
      */
-    public void invoke(CommandSender sender, Object... parameters) throws InvocationTargetException, IllegalAccessException {
+    public void invoke(CommandExecutor sender, Object... parameters) throws InvocationTargetException, IllegalAccessException {
         final Object[] objects = new Object[parameters == null ? 1 : parameters.length + 1];
 
         if (parameters != null) {
@@ -111,9 +110,9 @@ public abstract class CommandData<T extends Annotation> {
                 .collect(Collectors.joining(" "));
 
         if (this.getCommand() instanceof Subcommand) {
-            return ChatColor.RED + "/" + label + " " + ((Subcommand) this.getCommand()).label() + arguments;
+            return "§c/" + label + " " + ((Subcommand) this.getCommand()).label() + arguments;
         }
 
-        return ChatColor.RED + "/" + label + arguments;
+        return "§c/" + label + arguments;
     }
 }

@@ -5,9 +5,9 @@ An opensource command API for the spigot API
 ### Making a new command implementation:
 
 ```java
-import io.github.nosequel.command.annotation.Command;
-import io.github.nosequel.command.annotation.Param;
-import io.github.nosequel.command.annotation.Subcommand;
+import io.github.nosequel.Command;
+import io.github.nosequel.Param;
+import io.github.nosequel.Subcommand;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.EntityType;
@@ -35,7 +35,7 @@ public class ExampleCommand {
 ### Registering the command you've just created:
 
 ```java
-import io.github.nosequel.command.CommandHandler;
+import io.github.nosequel.CommandHandler;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class ExamplePlugin extends JavaPlugin {

@@ -2,26 +2,19 @@ package io.github.nosequel.command;
 
 import io.github.nosequel.command.adapter.TypeAdapter;
 import io.github.nosequel.command.adapter.impl.DoubleTypeAdapter;
-import io.github.nosequel.command.adapter.impl.IntegerTypeAdapter;
-import io.github.nosequel.command.adapter.impl.LocationTypeAdapter;
-import io.github.nosequel.command.adapter.impl.PlayerTypeAdapter;
 import io.github.nosequel.command.annotation.Command;
 import io.github.nosequel.command.annotation.Subcommand;
 import io.github.nosequel.command.data.impl.BaseCommandData;
 import io.github.nosequel.command.data.impl.SubcommandData;
+import io.github.nosequel.command.adapter.impl.IntegerTypeAdapter;
 import lombok.Getter;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.command.CommandMap;
-import org.bukkit.entity.Player;
 
 import java.lang.annotation.Annotation;
-import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class CommandHandler {
+public abstract class CommandHandler {
 
     @Getter
     private static CommandHandler commandHandler;
@@ -29,20 +22,9 @@ public class CommandHandler {
     private final Map<Class<?>, TypeAdapter<?>> typeAdapters = new HashMap<>();
     private final List<BaseCommandData> commands = new ArrayList<>();
 
-    private final CommandMap commandMap;
-    private final String fallbackPrefix;
-
-    public CommandHandler(String fallbackPrefix) {
+    public CommandHandler() {
         commandHandler = this;
 
-        this.fallbackPrefix = fallbackPrefix;
-
-        if ((this.commandMap = this.getCommandMap()) == null) {
-            throw new IllegalArgumentException("Unable to find CommandMap inside of Bukkit#getPluginManager");
-        }
-
-        this.registerTypeAdapter(Player.class, new PlayerTypeAdapter());
-        this.registerTypeAdapter(Location.class, new LocationTypeAdapter());
         this.registerTypeAdapter(Integer.class, new IntegerTypeAdapter());
         this.registerTypeAdapter(Double.class, new DoubleTypeAdapter());
     }
@@ -70,14 +52,12 @@ public class CommandHandler {
     }
 
     /**
-     * Register a command to the {@link CommandHandler#commandMap}
-     * and the {@link CommandHandler#commands} list.
+     * Register the command to the {@link CommandHandler#commands} list.
      *
      * @param data the command to register
      */
-    private void register(BaseCommandData data) {
+    public void register(BaseCommandData data) {
         this.commands.add(data);
-        this.commandMap.register(fallbackPrefix, new CommandExecutor(data));
     }
 
     /**
@@ -116,24 +96,4 @@ public class CommandHandler {
     public <T> void registerTypeAdapter(Class<T> clazz, TypeAdapter<T> adapter) {
         this.typeAdapters.put(clazz, adapter);
     }
-
-    /**
-     * Get the {@link CommandMap} registered
-     * inside of the {@link org.bukkit.plugin.SimplePluginManager} class
-     *
-     * @return the found command map, or null
-     */
-    private CommandMap getCommandMap() {
-        try {
-            final Field field = Bukkit.getPluginManager().getClass().getDeclaredField("commandMap");
-            field.setAccessible(true);
-
-            return (CommandMap) field.get(Bukkit.getPluginManager());
-        } catch (NoSuchFieldException | IllegalAccessException exception) {
-            exception.printStackTrace();
-        }
-
-        return null;
-    }
-
 }

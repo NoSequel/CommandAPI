@@ -1,7 +1,7 @@
 package io.github.nosequel.command.adapter.impl;
 
 import io.github.nosequel.command.adapter.TypeAdapter;
-import org.bukkit.command.CommandSender;
+import io.github.nosequel.command.executor.CommandExecutor;
 
 public class IntegerTypeAdapter implements TypeAdapter<Integer> {
 
@@ -13,7 +13,7 @@ public class IntegerTypeAdapter implements TypeAdapter<Integer> {
      * @return the converted object
      */
     @Override
-    public Integer convert(CommandSender executor, String source) throws Exception {
+    public Integer convert(CommandExecutor executor, String source) throws Exception {
         return Integer.parseInt(source);
     }
 }

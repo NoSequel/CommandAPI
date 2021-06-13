@@ -4,7 +4,6 @@ import io.github.nosequel.command.adapter.TypeAdapter;
 import io.github.nosequel.command.annotation.Param;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import org.bukkit.entity.Player;
 
 import java.lang.reflect.Parameter;
 

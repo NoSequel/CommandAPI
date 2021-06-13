@@ -1,9 +1,10 @@
-package io.github.nosequel.command;
+package io.github.nosequel.command.bukkit;
 
+import io.github.nosequel.command.bukkit.executor.BukkitCommandExecutor;
 import io.github.nosequel.command.data.CommandExecutingData;
-import io.github.nosequel.command.data.ParameterData;
 import io.github.nosequel.command.data.impl.BaseCommandData;
 import io.github.nosequel.command.data.impl.SubcommandData;
+import io.github.nosequel.command.data.ParameterData;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -37,6 +38,8 @@ public class CommandExecutor extends Command {
     @Override
     public boolean execute(CommandSender sender, String label, String[] strings) {
         final CommandExecutingData executingData = this.getData(strings);
+        final BukkitCommandExecutor executor = new BukkitCommandExecutor(sender);
+
         final String[] args = executingData.getArgs();
 
         if (!executingData.getPermission().isEmpty() && !sender.hasPermission(executingData.getPermission())) {
@@ -65,14 +68,14 @@ public class CommandExecutor extends Command {
 
                 try {
                     if (i >= args.length) {
-                        data[i] = parameterData.getAdapter().convert(sender, parameterData.getDefaultValue());
+                        data[i] = parameterData.getAdapter().convert(executor, parameterData.getDefaultValue());
                     } else if (parameterData.isLastIndex() && parameterData.isString()) {
                         data[i] = StringUtils.join(Arrays.copyOfRange(args, i, args.length), " ");
                     } else {
-                        data[i] = parameterData.getAdapter().convert(sender, args[i]);
+                        data[i] = parameterData.getAdapter().convert(executor, args[i]);
                     }
                 } catch (Exception exception) {
-                    parameterData.getAdapter().handleException(sender, args[i], exception);
+                    parameterData.getAdapter().handleException(executor, args[i], exception);
                 }
             }
         } else {
@@ -80,7 +83,7 @@ public class CommandExecutor extends Command {
         }
 
         try {
-            executingData.getCommandData().invoke(sender, data);
+            executingData.getCommandData().invoke(executor, data);
         } catch (InvocationTargetException | IllegalAccessException exception) {
             exception.printStackTrace();
         }
