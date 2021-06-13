@@ -67,8 +67,8 @@ public class CommandExecutor extends Command {
 
         try {
             executingData.getCommandData().invoke(sender, data);
-        } catch (InvocationTargetException | IllegalAccessException e) {
-            e.printStackTrace();
+        } catch (InvocationTargetException | IllegalAccessException exception) {
+            exception.printStackTrace();
         }
 
         return false;

@@ -119,8 +119,8 @@ public class CommandHandler {
             field.setAccessible(true);
 
             return (CommandMap) field.get(Bukkit.getPluginManager());
-        } catch (NoSuchFieldException | IllegalAccessException e) {
-            e.printStackTrace();
+        } catch (NoSuchFieldException | IllegalAccessException exception) {
+            exception.printStackTrace();
         }
 
         return null;
