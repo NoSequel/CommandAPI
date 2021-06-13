@@ -58,13 +58,15 @@ public class CommandExecutor extends Command {
             for (int i = 0; i < parameterDatum.length; i++) {
                 final ParameterData parameterData = parameterDatum[i];
 
-                if (i >= args.length) {
+                if (i >= args.length && parameterData.getDefaultValue() == null) {
                     sender.sendMessage(executingData.getCommandData().getUsageMessage(label));
                     return true;
                 }
 
                 try {
-                    if (parameterData.isLastIndex() && parameterData.isString()) {
+                    if (i >= args.length) {
+                        data[i] = parameterData.getAdapter().convert(sender, parameterData.getDefaultValue());
+                    } else if (parameterData.isLastIndex() && parameterData.isString()) {
                         data[i] = StringUtils.join(Arrays.copyOfRange(args, i, args.length), " ");
                     } else {
                         data[i] = parameterData.getAdapter().convert(sender, args[i]);
