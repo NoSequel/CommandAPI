@@ -4,6 +4,7 @@ import io.github.nosequel.command.data.CommandExecutingData;
 import io.github.nosequel.command.data.ParameterData;
 import io.github.nosequel.command.data.impl.BaseCommandData;
 import io.github.nosequel.command.data.impl.SubcommandData;
+import org.apache.commons.lang.StringUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -59,7 +60,11 @@ public class CommandExecutor extends Command {
             }
 
             try {
-                data[i] = parameterData.getAdapter().convert(sender, args[i]);
+                if (parameterData.isLastIndex() && parameterData.isString()) {
+                    data[i] = StringUtils.join(Arrays.copyOfRange(args, i, args.length));
+                } else {
+                    data[i] = parameterData.getAdapter().convert(sender, args[i]);
+                }
             } catch (Exception exception) {
                 parameterData.getAdapter().handleException(sender, args[i], exception);
             }
