@@ -32,9 +32,32 @@ public class ExampleCommand {
 }
 ```
 
+### Making a new type adapter implementation:
+
+```java
+import java.util.UUID;
+
+public class UUIDTypeAdapter implements TypeAdapter<UUID> {
+
+    /**
+     * Convert a {@link String} to the {@link Double} object type
+     *
+     * @param executor the executor of the command
+     * @param source   the source to convert
+     * @return the converted object
+     */
+    @Override
+    public UUID convert(CommandExecutor executor, String source) throws Exception {
+        return UUID.fromString(source);
+    }
+    
+}
+```
+
 ### Registering the command you've just created:
 
 ```java
+import com.sun.corba.se.impl.activation.CommandHandler;
 import io.github.nosequel.CommandHandler;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -42,7 +65,10 @@ public class ExamplePlugin extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        new CommandHandler("commands").registerCommand(new ExampleCommand());
+        final CommandHandler commandHandler = new BukkitCommandHandler("commands");
+
+        commandHandler.registerTypeAdapter(UUID.class, new UUIDTypeAdapter());
+        commandHandler.registerCommand(new ExampleCommand());
     }
 }
 ```
