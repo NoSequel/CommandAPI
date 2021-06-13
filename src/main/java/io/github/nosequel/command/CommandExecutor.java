@@ -26,7 +26,6 @@ public class CommandExecutor extends Command {
         super(data.getCommand().label());
 
         this.data = data;
-        this.setPermission(data.getCommand().permission());
 
         if (data.getCommand().aliases().length > 0) {
             this.setAliases(Arrays.asList(data.getCommand().aliases()));

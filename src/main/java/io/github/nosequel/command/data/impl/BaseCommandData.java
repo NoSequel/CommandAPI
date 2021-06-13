@@ -1,6 +1,7 @@
 package io.github.nosequel.command.data.impl;
 
 import io.github.nosequel.command.annotation.Command;
+import io.github.nosequel.command.annotation.Subcommand;
 import io.github.nosequel.command.data.CommandData;
 import lombok.Getter;
 
@@ -32,4 +33,9 @@ public class BaseCommandData extends CommandData<Command> {
     public Class<Command> getAnnotationType() {
         return Command.class;
     }
+
+    public boolean isParentOf(Subcommand subcommand) {
+        return subcommand.parentLabel().equalsIgnoreCase(this.getCommand().label());
+    }
+
 }
