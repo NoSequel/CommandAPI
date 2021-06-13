@@ -16,14 +16,14 @@ import org.bukkit.entity.Player;
 public class ExampleCommand {
 
     @Command(label = "example")
-    public void example(Player player, @Param(name = "text", value = "hello") String text, @Param(name = "description") String description) {
+    public void example(BukkitCommandExecutor player, @Param(name = "text", value = "hello") String text, @Param(name = "description") String description) {
         player.sendMessage(ChatColor.RED + text);
         player.sendMessage(ChatColor.YELLOW + description);
     }
 
     @Subcommand(parentLabel = "example", label = "sheep")
-    public void sheep(Player player, String entityType) {
-        final Location location = player.getLocation();
+    public void sheep(BukkitCommandExecutor player, String entityType) {
+        final Location location = player.getPlayer().getLocation();
         final EntityType type = EntityType.valueOf(entityType);
         
         location.getWorld().spawnEntity(location, type);
