@@ -115,4 +115,11 @@ public abstract class CommandData<T extends Annotation> {
 
         return "§c/" + label + arguments;
     }
+
+    /**
+     * Check if the command is user-only
+     *
+     * @return whether it's user-only or not
+     */
+    public abstract boolean isUserOnly();
 }

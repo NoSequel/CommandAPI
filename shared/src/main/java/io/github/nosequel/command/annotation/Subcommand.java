@@ -38,4 +38,6 @@ public @interface Subcommand {
      */
     String[] aliases() default {};
 
+    boolean userOnly();
+
 }

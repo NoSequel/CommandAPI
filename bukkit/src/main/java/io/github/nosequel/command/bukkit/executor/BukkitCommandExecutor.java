@@ -24,6 +24,27 @@ public class BukkitCommandExecutor implements CommandExecutor {
     }
 
     /**
+     * Check if the executor has a permission
+     *
+     * @param permission the permission to check for
+     * @return whether the executor has the permission
+     */
+    @Override
+    public boolean hasPermission(String permission) {
+        return this.sender.hasPermission(permission);
+    }
+
+    /**
+     * Check if the executor is a user, instead of the console/terminal.
+     *
+     * @return whether the executor is a user or not
+     */
+    @Override
+    public boolean isUser() {
+        return this.sender instanceof Player;
+    }
+
+    /**
      * Get the player object of the command sender
      */
     public Player getPlayer() {

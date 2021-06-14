@@ -31,4 +31,6 @@ public @interface Command {
      */
     String[] aliases() default {};
 
+    boolean userOnly();
+
 }

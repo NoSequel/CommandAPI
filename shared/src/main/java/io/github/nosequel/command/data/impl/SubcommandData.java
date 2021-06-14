@@ -26,4 +26,14 @@ public class SubcommandData extends CommandData<Subcommand> {
     public Class<Subcommand> getAnnotationType() {
         return Subcommand.class;
     }
+
+    /**
+     * Check if the command is user-only
+     *
+     * @return whether it's user-only or not
+     */
+    @Override
+    public boolean isUserOnly() {
+        return this.getCommand().userOnly();
+    }
 }

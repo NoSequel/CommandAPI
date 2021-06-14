@@ -37,7 +37,7 @@ public class BukkitCommandHandler extends CommandHandler {
     @Override
     public void register(BaseCommandData data) {
         super.register(data);
-        this.commandMap.register(fallbackPrefix, new CommandExecutor(data));
+        this.commandMap.register(fallbackPrefix, new BukkitCommandInvoker(data));
     }
 
     /**

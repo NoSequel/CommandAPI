@@ -34,6 +34,16 @@ public class BaseCommandData extends CommandData<Command> {
         return Command.class;
     }
 
+    /**
+     * Check if the command is user-only
+     *
+     * @return whether it's user-only or not
+     */
+    @Override
+    public boolean isUserOnly() {
+        return this.getCommand().userOnly();
+    }
+
     public boolean isParentOf(Subcommand subcommand) {
         return subcommand.parentLabel().equalsIgnoreCase(this.getCommand().label());
     }
