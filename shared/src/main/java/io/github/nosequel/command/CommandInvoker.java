@@ -70,6 +70,7 @@ public interface CommandInvoker {
                     }
                 } catch (Exception exception) {
                     parameterData.getAdapter().handleException(executor, args[i], exception);
+                    return;
                 }
             }
         } else {
