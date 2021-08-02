@@ -68,6 +68,10 @@ public interface CommandInvoker {
                     } else {
                         data[i] = parameterData.getAdapter().convert(executor, args[i]);
                     }
+
+                    if (data[i] == null) {
+                        throw new NullPointerException("Conversion returned null");
+                    }
                 } catch (Exception exception) {
                     parameterData.getAdapter().handleException(executor, args[i], exception);
                     return;
