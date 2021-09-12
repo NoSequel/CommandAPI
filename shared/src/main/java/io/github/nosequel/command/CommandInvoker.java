@@ -56,7 +56,7 @@ public interface CommandInvoker {
                 final ParameterData parameterData = parameterDatum[i];
 
                 if (i >= args.length && parameterData.getDefaultValue() == null) {
-                    executor.sendMessage(executingData.getCommandData().getUsageMessage(label));
+                    executor.sendMessage("&c" + executingData.getCommandData().getUsageMessage(label));
                     return;
                 }
 

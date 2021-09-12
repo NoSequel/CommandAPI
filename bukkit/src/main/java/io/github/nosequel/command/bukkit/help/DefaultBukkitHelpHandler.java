@@ -8,7 +8,6 @@ import io.github.nosequel.command.data.impl.SubcommandData;
 import io.github.nosequel.command.help.HelpHandler;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class DefaultBukkitHelpHandler implements HelpHandler {
 
