@@ -24,7 +24,7 @@ public class DefaultBukkitHelpHandler implements HelpHandler {
         final String label = commandData.getCommand().label();
 
         final List<String> strings = new ArrayList<>(Arrays.asList(
-                "&a=== &eShowing help for &f/" + label + " &a===",
+                "&a=== &eShowing help for &f/" + label + " &a=== &7(" + (commandData.getSubcommandData().size() + 1) + " results)",
                 this.getUsage(commandData) + " &7- " + commandData.getCommand().description()
         ));
 

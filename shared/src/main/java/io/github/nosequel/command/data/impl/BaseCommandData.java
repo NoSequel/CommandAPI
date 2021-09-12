@@ -6,13 +6,13 @@ import io.github.nosequel.command.data.CommandData;
 import lombok.Getter;
 
 import java.lang.reflect.Method;
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 public class BaseCommandData extends CommandData<Command> {
 
     @Getter
-    private final Set<SubcommandData> subcommandData = new LinkedHashSet<>();
+    private final List<SubcommandData> subcommandData = new ArrayList<>();
 
     /**
      * Constructor to make a new {@link CommandData} object
