@@ -7,6 +7,7 @@ import io.github.nosequel.command.annotation.Subcommand;
 import io.github.nosequel.command.data.impl.BaseCommandData;
 import io.github.nosequel.command.data.impl.SubcommandData;
 import io.github.nosequel.command.adapter.impl.IntegerTypeAdapter;
+import io.github.nosequel.command.help.HelpHandler;
 import lombok.Getter;
 
 import java.lang.annotation.Annotation;
@@ -14,6 +15,7 @@ import java.lang.reflect.Method;
 import java.util.*;
 import java.util.stream.Collectors;
 
+@Getter
 public abstract class CommandHandler {
 
     @Getter
@@ -21,6 +23,8 @@ public abstract class CommandHandler {
 
     private final Map<Class<?>, TypeAdapter<?>> typeAdapters = new HashMap<>();
     private final List<BaseCommandData> commands = new ArrayList<>();
+
+    protected HelpHandler helpHandler;
 
     public CommandHandler() {
         commandHandler = this;

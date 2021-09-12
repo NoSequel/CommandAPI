@@ -1,9 +1,12 @@
 package io.github.nosequel.command;
 
+import io.github.nosequel.command.annotation.Help;
+import io.github.nosequel.command.data.CommandData;
 import io.github.nosequel.command.data.CommandExecutingData;
 import io.github.nosequel.command.data.ParameterData;
 import io.github.nosequel.command.data.impl.BaseCommandData;
 import io.github.nosequel.command.data.impl.SubcommandData;
+import io.github.nosequel.command.exception.ConditionFailedException;
 import io.github.nosequel.command.executor.CommandExecutor;
 
 import java.lang.reflect.InvocationTargetException;
@@ -23,16 +26,24 @@ public interface CommandInvoker {
      */
     default void execute(CommandExecutor executor, String label, String[] strings) {
         final CommandExecutingData executingData = this.getData(strings);
+        final CommandData<?> commandData = executingData.getCommandData();
         final String[] args = executingData.getArgs();
 
-        if(!executor.hasPermission(executingData.getPermission())) {
+        if (!executor.hasPermission(executingData.getPermission())) {
             executor.sendMessage("&cNo permission.");
             return;
         }
 
-        if(!executor.isUser() && executingData.getCommandData().isUserOnly()) {
+        if (!executor.isUser() && executingData.getCommandData().isUserOnly()) {
             executor.sendMessage("&cOnly users can perform this command.");
             return;
+        }
+
+        if (commandData instanceof BaseCommandData && commandData.getMethod().isAnnotationPresent(Help.class)) {
+            executor.sendMessage(CommandHandler.getCommandHandler()
+                    .getHelpHandler()
+                    .getHelpMessage((BaseCommandData) commandData)
+            );
         }
 
         final ParameterData[] parameterDatum = executingData.getCommandData().getParameterData();
@@ -85,6 +96,8 @@ public interface CommandInvoker {
             executingData.getCommandData().invoke(executor, data);
         } catch (InvocationTargetException | IllegalAccessException exception) {
             exception.printStackTrace();
+        } catch (ConditionFailedException exception) {
+            executor.sendMessage("&cError: " + exception.getMessage());
         }
     }
 

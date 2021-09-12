@@ -3,6 +3,7 @@ package io.github.nosequel.command.bukkit;
 import io.github.nosequel.command.CommandHandler;
 import io.github.nosequel.command.bukkit.adapter.LocationTypeAdapter;
 import io.github.nosequel.command.bukkit.adapter.PlayerTypeAdapter;
+import io.github.nosequel.command.bukkit.help.DefaultBukkitHelpHandler;
 import io.github.nosequel.command.data.impl.BaseCommandData;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -24,6 +25,7 @@ public class BukkitCommandHandler extends CommandHandler {
         }
 
         this.fallbackPrefix = fallbackPrefix;
+        this.helpHandler = new DefaultBukkitHelpHandler();
 
         this.registerTypeAdapter(Player.class, new PlayerTypeAdapter());
         this.registerTypeAdapter(Location.class, new LocationTypeAdapter());

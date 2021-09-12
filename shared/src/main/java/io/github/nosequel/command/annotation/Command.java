@@ -24,6 +24,13 @@ public @interface Command {
     String permission() default "";
 
     /**
+     * Get the description of the command to display within the help message
+     *
+     * @return the description of the command
+     */
+    String description() default "Default command description";
+
+    /**
      * The sub-labels which can be used to execute
      * the command.
      *
@@ -31,6 +38,6 @@ public @interface Command {
      */
     String[] aliases() default {};
 
-    boolean userOnly();
+    boolean userOnly() default false;
 
 }

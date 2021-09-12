@@ -24,6 +24,13 @@ public @interface Subcommand {
     String parentLabel();
 
     /**
+     * Get the description of the command to display within the help message
+     *
+     * @return the description of the command
+     */
+    String description() default "Default command description";
+
+    /**
      * The permission required to execute the command
      *
      * @return the permission required
@@ -38,6 +45,6 @@ public @interface Subcommand {
      */
     String[] aliases() default {};
 
-    boolean userOnly();
+    boolean userOnly() default false;
 
 }
