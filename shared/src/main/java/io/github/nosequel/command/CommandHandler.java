@@ -8,6 +8,7 @@ import io.github.nosequel.command.data.impl.BaseCommandData;
 import io.github.nosequel.command.data.impl.SubcommandData;
 import io.github.nosequel.command.help.HelpHandler;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
@@ -23,6 +24,7 @@ public abstract class CommandHandler {
     private final Map<Class<?>, TypeAdapter<?>> typeAdapters = new HashMap<>();
     private final List<BaseCommandData> commands = new ArrayList<>();
 
+    @Setter
     protected HelpHandler helpHandler;
 
     public CommandHandler() {
