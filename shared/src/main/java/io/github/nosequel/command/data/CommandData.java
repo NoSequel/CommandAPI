@@ -4,7 +4,6 @@ import io.github.nosequel.command.adapter.impl.FallbackTypeAdapter;
 import io.github.nosequel.command.annotation.Subcommand;
 import io.github.nosequel.command.CommandHandler;
 import io.github.nosequel.command.adapter.TypeAdapter;
-import io.github.nosequel.command.exception.ConditionFailedException;
 import io.github.nosequel.command.executor.CommandExecutor;
 import lombok.Getter;
 
@@ -86,7 +85,7 @@ public abstract class CommandData<T extends Annotation> {
      * @throws InvocationTargetException thrown by {@link Method#invoke(Object, Object...)}
      * @throws IllegalAccessException    thrown by {@link Method#invoke(Object, Object...)}
      */
-    public void invoke(CommandExecutor sender, Object... parameters) throws InvocationTargetException, IllegalAccessException, ConditionFailedException {
+    public void invoke(CommandExecutor sender, Object... parameters) throws InvocationTargetException, IllegalAccessException {
         final Object[] objects = new Object[parameters == null ? 1 : parameters.length + 1];
 
         if (parameters != null) {

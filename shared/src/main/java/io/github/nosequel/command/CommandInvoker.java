@@ -95,9 +95,12 @@ public interface CommandInvoker {
         try {
             executingData.getCommandData().invoke(executor, data);
         } catch (InvocationTargetException | IllegalAccessException exception) {
+            if (exception.getCause() instanceof ConditionFailedException) {
+                executor.sendMessage("&cError: " + exception.getMessage());
+                return;
+            }
+
             exception.printStackTrace();
-        } catch (ConditionFailedException exception) {
-            executor.sendMessage("&cError: " + exception.getMessage());
         }
     }
 
