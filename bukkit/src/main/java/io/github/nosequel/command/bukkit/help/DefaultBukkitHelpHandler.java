@@ -29,7 +29,7 @@ public class DefaultBukkitHelpHandler implements HelpHandler {
         ));
 
         for (SubcommandData subcommandDatum : commandData.getSubcommandData()) {
-            strings.add(this.getUsage(subcommandDatum) + "&7- " + subcommandDatum.getCommand().description());
+            strings.add(this.getUsage(subcommandDatum) + " &7- " + subcommandDatum.getCommand().description());
         }
 
         return String.join("\n", strings);
