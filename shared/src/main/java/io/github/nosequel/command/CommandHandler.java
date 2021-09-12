@@ -1,12 +1,11 @@
 package io.github.nosequel.command;
 
 import io.github.nosequel.command.adapter.TypeAdapter;
-import io.github.nosequel.command.adapter.impl.DoubleTypeAdapter;
+import io.github.nosequel.command.adapter.impl.*;
 import io.github.nosequel.command.annotation.Command;
 import io.github.nosequel.command.annotation.Subcommand;
 import io.github.nosequel.command.data.impl.BaseCommandData;
 import io.github.nosequel.command.data.impl.SubcommandData;
-import io.github.nosequel.command.adapter.impl.IntegerTypeAdapter;
 import io.github.nosequel.command.help.HelpHandler;
 import lombok.Getter;
 
@@ -31,6 +30,9 @@ public abstract class CommandHandler {
 
         this.registerTypeAdapter(Integer.class, new IntegerTypeAdapter());
         this.registerTypeAdapter(Double.class, new DoubleTypeAdapter());
+        this.registerTypeAdapter(Boolean.class, new BooleanTypeAdapter());
+        this.registerTypeAdapter(UUID.class, new UUIDTypeAdapter());
+        this.registerTypeAdapter(Long.class, new LongTypeAdapter());
     }
 
     /**
