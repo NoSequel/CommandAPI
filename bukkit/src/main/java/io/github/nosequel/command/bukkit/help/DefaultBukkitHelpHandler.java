@@ -21,16 +21,12 @@ public class DefaultBukkitHelpHandler implements HelpHandler {
     @Override
     public String getHelpMessage(BaseCommandData commandData) {
         final String label = commandData.getCommand().label();
-
-        final List<SubcommandData> subcommandData = new ArrayList<>(commandData.getSubcommandData());
         final List<String> strings = new ArrayList<>(Arrays.asList(
                 "&a=== &eShowing help for &f/" + label + " &a=== &7(" + (commandData.getSubcommandData().size() + 1) + " results)",
                 this.getUsage(commandData) + " &7- " + commandData.getCommand().description()
         ));
 
-        subcommandData.sort(Comparator.comparingInt(data -> data.getCommand().weight()));
-
-        for (SubcommandData subcommandDatum : subcommandData) {
+        for (SubcommandData subcommandDatum : commandData.getSubcommandData()) {
             strings.add(this.getUsage(subcommandDatum) + " &7- " + subcommandDatum.getCommand().description());
         }
 
