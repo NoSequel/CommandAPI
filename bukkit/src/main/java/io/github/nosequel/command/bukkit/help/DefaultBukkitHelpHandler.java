@@ -59,10 +59,12 @@ public class DefaultBukkitHelpHandler implements HelpHandler {
                     .append(command.label());
         }
 
-        builder
-                .append("&a ")
-                .append(commandData.getArgumentUsage());
+        if (!commandData.getArgumentUsage().equals("")) {
+            builder
+                    .append("&a ")
+                    .append(commandData.getArgumentUsage());
 
+        }
         return builder.toString();
     }
 }

@@ -119,6 +119,10 @@ public abstract class CommandData<T extends Annotation> {
      * @return the arguments as a message
      */
     public String getArgumentUsage() {
+        if (this.parameterData == null) {
+            return "";
+        }
+
         return Arrays.stream(this.parameterData)
                 .map(argument -> "<" + argument.getParameterName() + ">")
                 .collect(Collectors.joining(" "));
