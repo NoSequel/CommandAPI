@@ -45,6 +45,12 @@ public @interface Subcommand {
      */
     String[] aliases() default {};
 
-    boolean userOnly() default false;
+    /**
+     * Get the weight for the command within the help usage message
+     *
+     * @return the weight
+     */
+    int weight() default 0;
 
+    boolean userOnly() default false;
 }

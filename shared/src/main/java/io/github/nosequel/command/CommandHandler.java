@@ -53,7 +53,7 @@ public abstract class CommandHandler {
         for (Method subCommand : subCommands) {
             for (BaseCommandData command : this.commands) {
                 if (command.isParentOf(subCommand.getAnnotation(Subcommand.class))) {
-                    command.getSubcommandData().add(new SubcommandData(object, subCommand));
+                    command.addSubcommand(new SubcommandData(object, subCommand));
                 }
             }
         }

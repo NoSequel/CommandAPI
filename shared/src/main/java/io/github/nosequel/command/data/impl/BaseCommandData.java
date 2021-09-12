@@ -7,6 +7,7 @@ import lombok.Getter;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class BaseCommandData extends CommandData<Command> {
@@ -42,6 +43,11 @@ public class BaseCommandData extends CommandData<Command> {
     @Override
     public boolean isUserOnly() {
         return this.getCommand().userOnly();
+    }
+
+    public void addSubcommand(SubcommandData data) {
+        this.subcommandData.add(data);
+        this.subcommandData.sort(Comparator.comparingInt(current -> current.getCommand().weight()));
     }
 
     public boolean isParentOf(Subcommand subcommand) {

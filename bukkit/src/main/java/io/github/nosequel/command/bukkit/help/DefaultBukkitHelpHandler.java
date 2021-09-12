@@ -7,9 +7,8 @@ import io.github.nosequel.command.data.impl.BaseCommandData;
 import io.github.nosequel.command.data.impl.SubcommandData;
 import io.github.nosequel.command.help.HelpHandler;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class DefaultBukkitHelpHandler implements HelpHandler {
 
@@ -23,12 +22,15 @@ public class DefaultBukkitHelpHandler implements HelpHandler {
     public String getHelpMessage(BaseCommandData commandData) {
         final String label = commandData.getCommand().label();
 
+        final List<SubcommandData> subcommandData = new ArrayList<>(commandData.getSubcommandData());
         final List<String> strings = new ArrayList<>(Arrays.asList(
                 "&a=== &eShowing help for &f/" + label + " &a=== &7(" + (commandData.getSubcommandData().size() + 1) + " results)",
                 this.getUsage(commandData) + " &7- " + commandData.getCommand().description()
         ));
 
-        for (SubcommandData subcommandDatum : commandData.getSubcommandData()) {
+        subcommandData.sort(Comparator.comparingInt(data -> data.getCommand().weight()));
+
+        for (SubcommandData subcommandDatum : subcommandData) {
             strings.add(this.getUsage(subcommandDatum) + " &7- " + subcommandDatum.getCommand().description());
         }
 
