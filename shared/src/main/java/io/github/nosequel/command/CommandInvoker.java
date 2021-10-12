@@ -29,7 +29,7 @@ public interface CommandInvoker {
         final CommandData<?> commandData = executingData.getCommandData();
         final String[] args = executingData.getArgs();
 
-        if (!executor.hasPermission(executingData.getPermission())) {
+        if (!executingData.getPermission().isEmpty() && !executor.hasPermission(executingData.getPermission())) {
             executor.sendMessage("&cNo permission.");
             return;
         }
